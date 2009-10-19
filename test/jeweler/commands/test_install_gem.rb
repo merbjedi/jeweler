@@ -22,6 +22,10 @@ class Jeweler
       end
 
       rubyforge_command_context "use_sudo?" do
+        setup do
+          ENV["DONT_SUDO_GEMS"] = nil
+        end
+
         should "be false on mswin" do
           stub(@command).host_os { "i386-mswin32" }
           assert ! @command.use_sudo?
@@ -40,6 +44,21 @@ class Jeweler
         should "be true on basically anything else" do
           stub(@command).host_os { "darwin9" }
           assert @command.use_sudo?
+        end
+      end
+
+      rubyforge_command_context "use_sudo? override" do
+        setup do
+          ENV["DONT_SUDO_GEMS"] = "true"
+        end
+        
+        should "be false if DONT_SUDO_GEMS is 'true'" do
+          stub(@command).host_os { "darwin9" }
+          assert ! @command.use_sudo?
+        end
+        
+        teardown do
+          ENV["RUBYFORGE_USER"] = nil
         end
       end
 

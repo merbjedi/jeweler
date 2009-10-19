@@ -22,7 +22,8 @@ class Jeweler
       end
 
       def use_sudo?
-        host_os !~ /mswin|windows|cygwin/i
+        host_os !~ /mswin|windows|cygwin/i &&
+         !(ENV['DONT_SUDO_GEMS'])
       end
 
       def host_os
