@@ -1,3 +1,7 @@
+# 2009-10-19
+ * Don't use sudo to install gems if ENV["DONT_SUDO_GEMS"] = "true"
+  * see http://ozmm.org/posts/local_gems.html
+
 # jeweler 1.2.0 2009-08-06
  * Generator now adds development dependencies appropriate to your testing framework
  * Added check_dependencies tasks for verifying gem dependencies are installed
