@@ -8,6 +8,7 @@ Jeweler provides two things:
 ## Quick Links
 
  * [Wiki](http://wiki.github.com/technicalpickles/jeweler)
+ * [Mailing List](http://groups.google.com/group/jeweler-rb)
  * [Bugs](http://github.com/technicalpickles/jeweler/issues)
  * [Donate](http://pledgie.org/campaigns/2604)
 
@@ -28,7 +29,6 @@ It's easy to get up and running. Update your Rakefile to instantiate a `Jeweler:
         gemspec.description = "Describe your gem"
         gemspec.email = "josh@technicalpickles.com"
         gemspec.homepage = "http://github.com/technicalpickles/the-perfect-gem"
-        gemspec.description = "TODO"
         gemspec.authors = ["Josh Nichols"]
       end
     rescue LoadError
@@ -87,6 +87,16 @@ Initially, your project starts out at 0.0.0. Jeweler provides Rake tasks for bum
     rake version:bump:minor
     rake version:bump:patch
 
+If you wish to specify the version number in your code, you may
+specify the version inside of the Jeweler block:
+
+    require File.dirname(__FILE__) + "/lib/my_project/version.rb"
+
+    Jeweler::Tasks.new do |gemspec|
+       gemspec.version = MyProject::VERSION
+       # more stuff
+    end
+
 ## Releasing to GitHub
 
 Jeweler handles releasing your gem into the wild:
@@ -104,8 +114,8 @@ It does the following for you:
 Jeweler can also handle releasing to [Gemcutter](http://gemcutter.org). There are a few steps you need to do before doing any Gemcutter releases with Jeweler:
 
  * [Create an account on Gemcutter](http://gemcutter.org/sign_up)
- * Install the Gemcutter gem: sudo gem install gemcutter
- * Run 'gemcutter tumble' to set up RubyGems to use gemcutter as the default source
+ * Install the Gemcutter gem: gem install gemcutter
+ * Run 'gem tumble' to set up RubyGems to use gemcutter as the default source
  * Update your Rakefile to make an instance of `Jeweler::GemcutterTasks`
 
 
@@ -113,7 +123,7 @@ A Rakefile setup for gemcutter would include something like this:
 
     begin
       require 'jeweler'
-      Jeweler::Tasks.new do |gem|
+      Jeweler::Tasks.new do |gemspec|
         # ommitted for brevity
       end
       Jeweler::GemcutterTasks.new
@@ -144,9 +154,9 @@ A Rakefile setup for rubyforge would include something like this:
 
     begin
       require 'jeweler'
-      Jeweler::Tasks.new do |s|
+      Jeweler::Tasks.new do |gemspec|
         # ommitted for brevity
-        s.rubyforge_project = 'the-perfect-gem' # This line would be new
+        gemspec.rubyforge_project = 'the-perfect-gem' # This line would be new
       end
 
       Jeweler::RubyforgeTasks.new do |rubyforge|
